@@ -24,9 +24,12 @@
 \usepackage{makeidx}
 \usepackage{listings}
 \usepackage{amsmath}
+\usepackage{realboxes}
 
 \newtoggle{InString}{}% Keep track of if we are within a string
 \togglefalse{InString}% Assume not initally in string
+
+\definecolor{light-gray}{gray}{0.95}
 
 \lstset{
     backgroundcolor=\color{bkg},
@@ -107,50 +110,87 @@ For the documentation of the source code refer to \href{https://selfhelp.psy.uni
 Finally, \href{https://selfhelp.psy.unibe.ch/demo/extend}{this page}\footnote{https://selfhelp.psy.unibe.ch/demo/extend} provides some information about possible extension and customization options of the WebApp.
 
 In the following it is assumed that a server is up and running and an instance of this WebApp is made available.
+After a clean setup an account \texttt{admin} is activated which can be accessed with the password \texttt{admin};
 
 %==============================================================================
 \chapter{Creating a New Page}
-\label{sec.quick}
+\label{sec.new_page}
 In order to crate a new page the \texttt{select} and \texttt{insert} access right of \textbf{Page Management} are required.
 By default users in the group \texttt{admin} and \texttt{experimenter} are granted the mentioned access rights.
 
 Once logged in, navigate to the \emph{Content Management System (CMS)} in the menu \emph{Admin} and click the button \emph{Create New Page} in the top left corner.
-This opens the \emph{Create New Page} form where properties of the new page can be entered:
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.95\textwidth]{create_page.png}
+    \caption{The \emph{Create New Page} form.}
+    \label{fig.create_page}
+\end{figure}
+
+This opens the \emph{Create New Page} form (see Figure~\ref{fig.create_page}) where properties of the new page can be entered:
 \begin{description}
     \item[Keyword]
-        This must be a unique name which is used to identify a page internally (e.g. \texttt{demo}).
+        This must be a unique name which is used to identify a page internally (e.g. \Colorbox{light-gray}{\lstinline[columns=fixed]|demo|}).
         This is also the name that will be used in the CMS when a link to this page must be shown.
         Note that this field is not visible for a user without access to the CMS (e.g. a subject).
-    \item[Header Position]
-        Enabled this field to make the page appear as a menu-point in the navigation bar of the WebApp.
-        Drag and drop the item to the location you want it to appear.
-        Note that the page will only appear as a menu item once the \texttt{title} field is set (this must be done after the page creation process).
     \item[Page Type]
         The page type specified how the page content will be assembled.
         Choose type \textbf{Sections}.
+    \item[Header Position]
+        Enable this field to make the page appear as a menu-point in the navigation bar of the WebApp.
+        Drag and drop the item \textbf{New Page} to the location you want it to appear.
+        Note that the page will only appear as a menu item once the \texttt{title} field is set (this must be done after the page creation process).
     \item[User Input]
         This field specifies whether the page will hold forms for user input.
         Leave this disabled.
-    \item[Protocol]
+    \item[Protocol (advanced only)]
         The protocol specifies how a page is accessed.
-        Enable \textbf{GET} and leave everything else disabled.
-    \item[Url Pattern]
+        Do not change this.
+    \item[Url Pattern (advanced only)]
         This field describes the url path of how the page will be accessible.
         By default the keyword is used.
+    \item[Advanced]
+        Set this flag if you wish to specify advanced options.
+        This includes
+        \begin{itemize}
+            \item the selection of the \emph{page type} \textbf{Component} or \textbf{Custom}.
+            \item the selection of the \emph{Protocol}.
+            \item changing the \emph{url pattern}.
+        \end{itemize}
 \end{description}
 
 Click the button \textbf{Create} to create the page and on success the button \textbf{To the new Page} to return back to the CMS with the new page selected.
 
 %------------------------------------------------------------------------------
 \section{Add Content to the Page}
+\label{sec.add_content}
 In order to add content to a page the \texttt{update} access right of \textbf{Page Management} is required.
 By default users in the group \texttt{admin} and \texttt{experimenter} are granted the mentioned access rights.
 
-In a first step let's define the title of the page \texttt{demo}.
+In a first step let's define the title of the page \Colorbox{light-gray}{\lstinline[columns=fixed]|demo|}.
 The title is used as label for the menu item in the navigation bar of the WebApp and will appear in the browser tab.
 To set the page title select the pen symbol in the top right corner of the \emph{Page Properties} card.
 Doing so will change the card colour to yellow and provide an input field where the title can be entered.
-Click \textbf{Submit Changes} to make the change permanent.
+If you just created a new page you will already be in edit mode (which is indicated by the yellow border of the \emph{Page Properties} card).
+Change the field \texttt{title} (e.g. to \Colorbox{light-gray}{\lstinline[columns=fixed]|Demo|}) and click \textbf{Submit Changes} to make the change permanent.
+If during the creation of the page the option \emph{Header Position} was enabled, the title \Colorbox{light-gray}{\lstinline[columns=fixed]|Demo|} will now show up in the header at the specified position.
+
+\begin{figure}[ht]
+    \centering
+    \begin{subfigure}[b]{0.49\textwidth}
+        \includegraphics[width=\textwidth]{page_properties.png}
+        \caption{View mode.}
+        \label{fig.page_properties_view}
+    \end{subfigure}
+    ~
+    \begin{subfigure}[b]{0.49\textwidth}
+        \includegraphics[width=\textwidth]{page_properties_edit.png}
+        \caption{Edit mode.}
+        \label{fig.page_properties_edit}
+    \end{subfigure}
+    \caption{The \emph{Page Properties} card.}
+    \label{fig.page_properties}
+\end{figure}
 
 Adding content to the page is done by creating and adding sections to the page.
 This can be done by clicking on the button \textbf{Add} below the field \texttt{sections} in the \emph{Page Properties} card.
@@ -161,6 +201,20 @@ Note that the style is always appended to the section name.
 The style defines how the section will look like and what type of content can be assigned to it.
 Let's choose the style \texttt{container} which is used as wrapper for other styles to be added to the page.
 This helps to manage the spacing at the edges of the page.
+
+The \emph{Add Section} form, as depicted in Figure~\ref{fig.add_section}, has several cards:
+The \emph{Add Section} card is all that is needed to create a new section.
+However, given that there are quite a few styles to choose from the card \emph{Style Selection Helper} may come in handy.
+This card aims to group styles into different categories and provides a very short description of each available style.
+The two cards \emph{Select an Unassigned Section} and \emph{Select an Existing Section} allow to choose already existing sections without creating a new one where the former lists sections that are assigned to no parent and the latter lists all user-created sections.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=\textwidth]{add_section.png}
+    \caption{The \emph{Add Section} form.}
+    \label{fig.add_section}
+\end{figure}
+
 Click \textbf{Add Section} to create the new section which will return you to the CMS with the new section selected in edit mode (the card \emph{Section Properties} is yellow).
 
 The next step is to edit the properties of the section.
@@ -168,7 +222,7 @@ A container section only has the two fields \texttt{CSS} and \texttt{is\_fluid}.
 Enable the field \texttt{is\_fluid} to make the container span over the whole page.
 The field \texttt{CSS} is special in the sense that every style has this filed.
 It allows to specify css classes (sperated by spaces) that will be added to the root html tag of the style.
-Add the bootstrap class \texttt{my-3} to the field to add some spacing at the top and the bottom of the container (refer to the \href{https://getbootstrap.com/docs/4.1/utilities/spacing/}{Bootstrap documentation} from more details).
+Add the bootstrap class \Colorbox{light-gray}{\lstinline[columns=fixed]|my-3|} to the field to add some spacing at the top and the bottom of the container (refer to the \href{https://getbootstrap.com/docs/4.1/utilities/spacing/}{Bootstrap documentation} from more details).
 
 Now continue to add sections to the container you just created. For example:
 \begin{itemize}
@@ -192,7 +246,7 @@ Doing all of this and tweaking the available fields of the different styles shou
 Up to this point we created a section page and added the link to this page to the navigation bar.
 It is also possible to create a menu item with multiple page links.
 It is, however, not possible to change the position or hierarchy of a page once it is created.
-A workaround is the remove the page and create a new one that fits those requirements.
+A workaround is to remove the page and create a new one that fits those requirements.
 Note that sections remain untouched when a page is deleted, hence, recreating a page with its initial content is not a big deal.
 
 In order to delete a page the \texttt{delete} access right of \textbf{Page Management} is required.
@@ -206,27 +260,146 @@ This opens the \emph{Delete Page} from where the keyword of the page has to be e
 Click \textbf{Delete Page} and on success click \textbf{Back to CMS} to return to the CMS.
 
 Now, create a new page which will only serve as the root menu item in the navigation bar.
-For this purpose I propose to append the string \texttt{-link} to the keyword of the new page (e.g \texttt{demo-link}).
+For this purpose I propose to append the string \Colorbox{light-gray}{\lstinline[columns=fixed]|-link|} to the keyword of the new page (e.g \Colorbox{light-gray}{\lstinline[columns=fixed]|demo-link|}).
 Enable the field \texttt{Header Position} and choose the appropriate position.
 Leave the remaining fields untouched and click \textbf{Create}.
 
-Back in the CMS define the title of the page and then click the button \textbf{Create New Child Page} in the card \emph{Create New Child Page}.
-Once again the \emph{Create New Page} form is opened where we can recreate the page \texttt{demo} from the beginning of this chapter.
+Back in the CMS define the title of the page in the \emph{Page Properties} card as described in the beginning of Section~\ref{sec.add_content}.
+Once this is done click the button \textbf{Create New Child Page} in the card \emph{Create New Child Page}.
+Once again the \emph{Create New Page} form is opened where we can recreate the page \Colorbox{light-gray}{\lstinline[columns=fixed]|demo|} as described in Section~\ref{sec.new_page} in the beginning of this chapter.
 Note that when enabling \texttt{Header Position} only the new page is shown.
-This is because this page is the first child page in this menu.
+This is because this page is the first child page in this menu and the position refers to the current hierarchy level of the page (i.e. to the children of the page \Colorbox{light-gray}{\lstinline[columns=fixed]|demo-link|}).
 Back in the CMS define the title of the page and click the button \textbf{Add} below the field \texttt{sections} to add the sections we created before.
 
 Once the \emph{Add Section} form opens you will notice that on the right in the card \emph{Unassigned Sections} the container section we create before is listed.
-Select the section and click \textbf{Add Section} which will restore the page as it is represented in Figure \ref{fig.demo} with the exception that now, the page is reachable through a dropdown menu in the navigation bar.
+Select this section and click \textbf{Add Section} which will restore the page as it is represented in Figure \ref{fig.demo} with the exception that now, the page is reachable through a dropdown menu in the navigation bar.
 
 %------------------------------------------------------------------------------
-\section{Navigation Page}
-Often in might be interesting to navigate from page to page by clicking on buttons \textbf{Next} and \textbf{Back} or by selecting the corresponding page in a list.
+\section{Create a Navigation Page}
+Often, it might be interesting to navigate from page to page by clicking on buttons \textbf{Next} and \textbf{Back} or by selecting the corresponding page in a list.
 To achieve this the page type \texttt{Navigation} can be used.
-A navigation page is a special type of section page where only one section is rendered at a time.
-A set of root sections, or navigation sections, each of style \texttt{navigationContainer} is assigned to a navigation page.
-An id that is postfixed to the url indicates which section is rendered.
-To demonstrate this, let us create such a navigation page which we can reach from our page \texttt{demo} which we created earlier.
+A navigation page is a special type of section page where only one immediate child section (which can hold any number of child sections) is rendered at a time.
+
+\begin{figure}[ht]
+    \centering
+    \begin{subfigure}[t]{0.22\textwidth}
+        \includegraphics[width=\textwidth]{section_page.png}
+        \caption{A section page with four sections.}
+        \label{fig.section_page}
+    \end{subfigure}
+    ~
+    \begin{subfigure}[t]{0.22\textwidth}
+        \includegraphics[width=\textwidth]{nav_page.png}
+        \caption{A navigation page with four sections (abstract view).}
+        \label{fig.nav_page}
+    \end{subfigure}
+    ~
+    \begin{subfigure}[t]{0.22\textwidth}
+        \includegraphics[width=\textwidth]{nav_page_url.png}
+        \caption{A navigation page where section $2$ is active.}
+        \label{fig.nav_page_url}
+    \end{subfigure}
+    ~
+    \begin{subfigure}[t]{0.22\textwidth}
+        \includegraphics[width=\textwidth]{nav_page_menu.png}
+        \caption{A navigation page with control elements to navigate through navigation sections.}
+        \label{fig.nav_page_menu}
+    \end{subfigure}
+    \caption{A conceptual representation of a section page and a navigation page.}
+    \label{fig.page_types}
+\end{figure}
+
+Figure~\ref{fig.page_types} aims at visualizing this concept.
+Figure~\ref{fig.section_page} shows a simple section page with four immediate child sections.
+Figure~\ref{fig.nav_page} shows a representation of a navigation page with four immediate child sections.
+The sections of the section page are represented one below the other.
+However, the sections of the navigation page are represented like they were stacked on top of other like a card deck.
+In the following, such sections of a navigation page are called navigation sections.
+Note that only one navigation section of a navigation page can be visible.
+This is indicated on Figure~\ref{fig.nav_page_url}.
+A predefined set of buttons can be rendered on a navigation page which allows to navigate through all navigation sections associated to this page.
+Also, a menu can be rendered on a navigation page or any other page which allows to navigate through navigation sections and jump to a specific section.
+This is indicated on Figure~\ref{fig.nav_page_menu}.
+
+A navigation page has several characteristics:
+\begin{itemize}
+    \item A navigation page can only be rendered if the navigation section to be displayed is specified (this is done via the url).
+    \item Because of the previous point a navigation page cannot be displayed as a menu in the header.
+    \item A navigation section can only have the style \texttt{navigationContainer}. However, children of such a section can have any style.
+\end{itemize}
+
+To demonstrate how a navigation page works, let us create such a page.
+
+We start by creating a new page of type \texttt{Navigation}.
+Let this page be a child of the page \Colorbox{light-gray}{\lstinline[columns=fixed]|demo-link|}.
+There is no real importance to this but it helps to keep things grouped together in the CMS.
+So, select the page \Colorbox{light-gray}{\lstinline[columns=fixed]|demo-link|} and click the button \textbf{Create New Child Page}.
+Set a keyword (e.g. \Colorbox{light-gray}{\lstinline[columns=fixed]|demo-nav|}) and set the type to \texttt{Navigation}.
+Note by switching to page type \texttt{Navigation} the field \texttt{Header Position} disappears due to the fact that it cannot be used as a header menu.
+Also note that the pattern \Colorbox{light-gray}{\lstinline[columns=fixed]|[i:nav]|} is appended to the \texttt{Url Pattern}.
+This pattern will be replaced by the id of the selected navigation section to be displayed on the naviagtion page.
+
+Back in the CMS the page fields can be edited.
+As with section pages, the field \texttt{title} defines what will be displayed in the browser tab.
+The field \texttt{css\_nav} allows to add css classes to the navigation list that is displayed to the left of a navigation page.
+The fields \texttt{label\_back} and \texttt{label\_next} will be the labels of the navigation buttons \textbf{Next} and \textbf{Back}, respectively.
+These buttons will only be displayed if the field \texttt{has\_navigation\_buttons} is enabled.
+The field \texttt{is\_fluid} defines whether the content is stretched to the whole of the page or not.
+For more information about the rest of the available fields refer to the \href{https://selfhelp.psy.unibe.ch/demo/style/362}{\texttt{nestedList} style documentation}.
+
+In order to add a stack of navigation sections to this navigation page the \textbf{Add} button below the field \texttt{navigation} can be used.
+
+Note that a navigation page has a field \texttt{sections} (which we already know from section pages).
+This allows to add sections that are rendered before the selected navigation section and will remain the same, independent of the navigation section that is currently displayed (refer to Figure~\ref{fig.demo-nav-page-head} for an example).
+
+Let's add some navigation sections:
+Click the \textbf{Add} button below the field \texttt{navigation} which will open the \emph{Add Navigation Section} form.
+This is a simplified \emph{Add Section} form where only a name can be chosen.
+Note that the style is fixed to \texttt{navigationContainer} and cannot be changed.
+Set the name (e.g. \Colorbox{light-gray}{\lstinline[columns=fixed]|demo-nav1|}) and click \textbf{Add Section} to complete the process.
+In the Section Properties card, the field \texttt{title} serves as title for the navigation list item representing the navigation section wrapped by this container.
+The field \texttt{text\_md} is rendered at the top of the navigation section.
+Note that the special string \Colorbox{light-gray}{\lstinline[columns=fixed]|@title|} can be used to render the field \texttt{title} within the field \texttt{text\_md}.
+Finally, the field \texttt{CSS} allows to add css classes to the navigation container section to modify its visual aspects.
+
+As an example set the field \texttt{title} to \Colorbox{light-gray}{\lstinline[columns=fixed]|Nav 1|} and the field \texttt{text\_md} to \Colorbox{light-gray}{\lstinline[columns=fixed]|# Demo @title|} (the \# symbol is markdown syntax for a heading of level 1) and click \textbf{Submit Changes}.
+
+In order to truly see how navigation pages work we have to add some more navigation sections.
+Do this by selecting the page \Colorbox{light-gray}{\lstinline[columns=fixed]|demo-nav|} and adding two more navigation sections with the titles \Colorbox{light-gray}{\lstinline[columns=fixed]|Nav 2|} and \Colorbox{light-gray}{\lstinline[columns=fixed]|Nav 3|}.
+
+\subsection{Linking to Navigation Sections}
+Up to this point we created a navigation page with three navigation sections but have currently no way of accessing them.
+As noted before, in order to display a navigation page an id of a navigation section needs to be specified in the url.
+Let's assume that the keyword of the navigation page is \Colorbox{light-gray}{\lstinline[columns=fixed]|demo-nav|}, the base path of the WebApp is \Colorbox{light-gray}{\lstinline[columns=fixed]|https://selfhelp.psy.unibe.ch/myapp|}, and the id of the navigation section we want to display is \Colorbox{light-gray}{\lstinline[columns=fixed]|n|} (Note that the id of a section is the last number in the url when selecting this section in the CMS).
+The url to access this navigation section would then be \Colorbox{light-gray}{\lstinline[columns=fixed]|https://selfhelp.psy.unibe.ch/myapp/demo-nav/n|}.
+
+Obviously, it is rather cumbersome to reach a navigation page this way which is why there is a mechanism to automatically generate these links.
+There exist two possibilities to generate links to a navigation section:
+\begin{enumerate}
+    \item When using a link style (e.g. styles \texttt{link} or \texttt{button}), the field \texttt{url} can be set to a pattern of the specific form
+        \Colorbox{light-gray}{\lstinline[columns=fixed]|#<nav_page>/<nav_section>|} where \Colorbox{light-gray}{\lstinline[columns=fixed]|<nav\_page>|} is the keyword of the navigation page and \Colorbox{light-gray}{\lstinline[columns=fixed]|<nav\_section>|} the name of the navigation section.
+        E.g. assuming that the navigation page keyword is \Colorbox{light-gray}{\lstinline[columns=fixed]|demo-nav|} and the navigation section has the name \Colorbox{light-gray}{\lstinline[columns=fixed]|demo-nav1-navigationContainer|}, to access the navigation section the field \texttt{url} would be set to \Colorbox{light-gray}{\lstinline[columns=fixed]|#demo-nav/demo-nav1-navigationContainer|}.
+
+        \emph{This feature is available from version v1.0.0 (January 2019).}
+    \item A list style \texttt{nestedList} allows to be linked to a navigation page which will automatically generate the list of all navigation sections attributed to the navigation page.
+        This is accomplished by setting the field \texttt{items} to the pattern \Colorbox{light-gray}{\lstinline[columns=fixed]|{"nav_page": "<nav_page>"}|} where \Colorbox{light-gray}{\lstinline[columns=fixed]|<nav_page>|} is the keyword of the navigation page to be linked.
+        E.g. assuming that the navigation page keyword is \Colorbox{light-gray}{\lstinline[columns=fixed]|demo-nav|}, to generate the list of links to all navigation sections the field \texttt{items} would be set to \Colorbox{light-gray}{\lstinline[columns=fixed]|{"nav_page": "demo-nav"}|}.
+\end{enumerate}
+
+To demonstrate how to link the navigation page \Colorbox{light-gray}{\lstinline[columns=fixed]|demo-nav|} and all its navigation sections, let's use a nested list:
+We can achieve this by adding a new section to the page \Colorbox{light-gray}{\lstinline[columns=fixed]|demo|} we created in the beginning.
+Select the page \Colorbox{light-gray}{\lstinline[columns=fixed]|demo|} and add a new child section of style \texttt{nestedList} to the page:
+\begin{enumerate}
+    \item Select any container section or the page itself and click \textbf{Add} below the field \texttt{children} or \texttt{sections}, respecively.
+    \item Select the style \texttt{nestedList} (from style group \texttt{List}).
+    \item Enter a name (e.g. \Colorbox{light-gray}{\lstinline[columns=fixed]|demo-nav-link|}).
+    \item Click \textbf{Add Section}.
+    \item In the card \emph{Section Properties} fill out the field \texttt{items} with the content \Colorbox{light-gray}{\lstinline[columns=fixed]|{"nav_page": "demo-nav"}|}.
+        This is a special \href{http://www.json.org/}{json} string which tells the nested list to go and fetch all navigation sections of the navigation page \Colorbox{light-gray}{\lstinline[columns=fixed]|demo-nav|}.
+    \item Leave everything else as is and click \textbf{Submit Changes}.
+\end{enumerate}
+
+As a result you should get something similar to what is represented in Figure \ref{fig.demo-nav}.
 
 \begin{figure}[ht]
     \centering
@@ -235,46 +408,7 @@ To demonstrate this, let us create such a navigation page which we can reach fro
     \label{fig.demo-nav}
 \end{figure}
 
-We start by creating a new page of type \texttt{Navigation}.
-Let this page be a child of the page \texttt{demo-link}.
-There is no real importance to this but it helps to keep things grouped together in the CMS.
-So, select the page \texttt{demo-link} and click the button \textbf{Create New Child Page}.
-Set a keyword (e.g. \texttt{demo-nav}) and set the type to \texttt{Navigation}.
-Do not enable the field \texttt{Header Position} and let all other fields as is.
-Note that when selection the type \texttt{Navigation} the pattern \texttt{[i:nav]} as appended to the \texttt{Url Pattern}.
-This pattern will be replaced by the id of the selected navigation section to be displayed on the naviagtion page.
-
-Back in the CMS the page fields can be edited.
-As with section pages, the field \texttt{title} defines what will be displayed in the browser tab.
-The fields \texttt{label\_back} and \texttt{label\_next} will be the labels of the buttons \textbf{Next} and \textbf{Back}, respectively that were mentioned before.
-These buttons will only be displayed if also the field \texttt{has\_navigation\_buttons} is enabled.
-The field \texttt{is\_fluid} defines whether the content is stretched to the whole of the page or not.
-For more information about the rest of the available fields refer to the \href{https://selfhelp.psy.unibe.ch/demo/style/362}{\texttt{nestedList} style documentation}.
-
-Note that a navigation page has the field \texttt{sections} (which we already know from section pages) that allows to add section, one below the other, to the navigation page.
-In addition to this, the field \texttt{navigation} allows to add navigation sections from which only one is displayed at a time.
-Which section to display is defined by the trailing id in the url.
-
-Let's add some navigation sections to see what this does:
-Click the \textbf{Add} button below the field \texttt{navigation} which will open the \emph{Add Section} form that we already know.
-Enter a name (e.g. \texttt{demo-nav1}), select the style \texttt{navigationContainer}, and click \textbf{Add Section}.
-The style \texttt{navigationContainer} is used to wrap the content of a navigation section.
-The field \texttt{title} serves as title for the navigation list item representing the navigation section wrapped by this container.
-The field \texttt{text\_md} is rendered at the top of the container.
-Note that the special string \texttt{@title} can be used to render the field \texttt{title} within the field \texttt{text\_md}.
-
-As an example set the field \texttt{title} to "\texttt{Nav 1}" and the field \texttt{text\_md} to "\texttt{\# Demo @title}".
-Select again the page \texttt{demo-nav} and add two more naviagtion sections "\texttt{Nav 2}" and "\texttt{Nav 3}".
-
-Finally we need to link to this navigation page and all its navigation sections.
-We can achieve this by adding a new section to the page \texttt{demo} we created in the beginning:
-Select the page \texttt{demo} and add a new child section of style \texttt{nestedList} to the jumbatron for example.
-Back in the CMS only fill out the field \texttt{items} with the content \texttt{\{"nav\_page": "demo-nav"\}}.
-This is a special \href{http://www.json.org/}{json} string which tells the nested list to go and fetch all navigation sections of the navigation page \texttt{demo-nav}.
-
-As a result you should get something similar to what is represented in Figure \ref{fig.demo-nav}.
-
-The navigation page \texttt{demo-nav} is reached by clicking on any of the items displayed in the nested list.
+The navigation page \Colorbox{light-gray}{\lstinline[columns=fixed]|demo-nav|} is reached by clicking on any of the items displayed in the nested list.
 The result should look similar to Figure \ref{fig.demo-nav-page}.
 
 \begin{figure}[ht]
@@ -284,7 +418,7 @@ The result should look similar to Figure \ref{fig.demo-nav-page}.
     \label{fig.demo-nav-page}
 \end{figure}
 
-Note that sections that are added to the navigation page \texttt{demo-nav} through the filed \texttt{sections} will appear on top of each navigation section as demonstrated in Figure \ref{fig.demo-nav-page-head}.
+Note that sections that are added to the navigation page \Colorbox{light-gray}{\lstinline[columns=fixed]|demo-nav|} through the filed \texttt{sections} will appear on top of each navigation section as demonstrated in Figure \ref{fig.demo-nav-page-head}.
 
 \begin{figure}[ht]
     \centering
@@ -293,11 +427,103 @@ Note that sections that are added to the navigation page \texttt{demo-nav} throu
     \label{fig.demo-nav-page-head}
 \end{figure}
 
-Note that navigation sections can be arranged hierarchically.
+Also note that navigation sections can be arranged hierarchically by using the field \texttt{navigation} in the card \emph{Section Properties} of a navigation section and adding a child navigation section.
+
+%==============================================================================
+\chapter{Working with User Input}\label{sec.user_input}
+The Selfhelp WebApp allows to create html forms where user input is automatically stored to the database.
+In order for a page to be allowed to send data to the server the following two conditions need to be met:
+\begin{enumerate}
+    \item The \texttt{POST} protocol needs to be enabled when creating a new page.
+        This is done by checking the box \emph{User Input} in the \emph{Create New Page} form (see Figure~\ref{fig.create_page}).
+    \item The page requires input fields, wrapped by a form such that users can enter and submit their data.
+        Forms and their input fields are added to a page by adding sections with styles from the groups \texttt{Form} and \texttt{Input}, respectively.
+\end{enumerate}
+
+There are two ways of how user data is stored to the database automatically:
+\begin{enumerate}
+    \item Data is continuously updated.
+        In this case an input field always shows the current, user-specific content and whenever this content is changed by the user, the old values are overwritten in the database.
+        This way of storing data is intended for entries where data is constantly edited and revised.
+    \item Data is stored incrementally.
+        In this case each time a set of data is submitted to the server, a timestamp is attached to the data.
+        For each submission a new entry is created in the database which allows to store multiple entries, made at different points in time.
+        This way of storing the data is intended of log-like forms where a user is asked to enter a specific set of data every day.
+\end{enumerate}
+
+As a demonstration let's add a new section page (set \emph{Page Type} to \texttt{Sections}) with keyword \Colorbox{light-gray}{\lstinline[columns=fixed]|user_input|} and title \Colorbox{light-gray}{\lstinline[columns=fixed]|User Input|} to the demo application.
+Remember to check the \emph{User Input} checkbox (in order to allow user input) and the \emph{Header Position} checkbox (to place the page in the header) in the \emph{Create New Page} form.
+
+Next, add sections to this page to get a similar result as represented in Figure~\ref{fig.form-empty}.
+This is accomplished by adding the following sections hierarchically to the page \Colorbox{light-gray}{\lstinline[columns=fixed]|user_input|}:
+\begin{itemize}
+    \item a \texttt{container} with \texttt{css} $=$ \Colorbox{light-gray}{\lstinline[columns=fixed]|my-3|} and \texttt{is\_fluid} enabled
+        \begin{itemize}
+            \item a \texttt{card} with \texttt{title} $=$ \Colorbox{light-gray}{\lstinline[columns=fixed]|Diary|}
+                \begin{itemize}
+                    \item a \texttt{formUserInput} with \texttt{name} $=$ \Colorbox{light-gray}{\lstinline[columns=fixed]|diary|}, \texttt{alert\_success} $=$ \Colorbox{light-gray}{\lstinline[columns=fixed]|Well done|}, and \texttt{label} $=$ \Colorbox{light-gray}{\lstinline[columns=fixed]|Submit|}
+                        \begin{itemize}
+                            \item a \texttt{textarea} with \texttt{name} $=$ \Colorbox{light-gray}{\lstinline[columns=fixed]|diary-thought|} and \texttt{label} $=$ \Colorbox{light-gray}{\lstinline[columns=fixed]|My Thoughts|}
+                            \item a \texttt{textarea} with \texttt{name} $=$ \Colorbox{light-gray}{\lstinline[columns=fixed]|diary-action|} and \texttt{label} $=$ \Colorbox{light-gray}{\lstinline[columns=fixed]|My Actions|}
+                        \end{itemize}
+                \end{itemize}
+            \item a \texttt{card} with \texttt{title} \Colorbox{light-gray}{\lstinline[columns=fixed]|Log|} and \texttt{css} $=$ \Colorbox{light-gray}{\lstinline[columns=fixed]|mt-3|}
+                \begin{itemize}
+                    \item a \texttt{formUserInput} with \texttt{name} $=$ \Colorbox{light-gray}{\lstinline[columns=fixed]|log|}, \texttt{alert\_success} $=$ \Colorbox{light-gray}{\lstinline[columns=fixed]|Well done|}, \texttt{label} $=$ \Colorbox{light-gray}{\lstinline[columns=fixed]|Submit|}, and with \texttt{is\_log} checked
+                        \begin{itemize}
+                            \item an \texttt{input} with \texttt{type\_input} $=$ \Colorbox{light-gray}{\lstinline[columns=fixed]|time|}, \texttt{name} $=$ \Colorbox{light-gray}{\lstinline[columns=fixed]|log-alarm|}, and \texttt{label} $=$ \Colorbox{light-gray}{\lstinline[columns=fixed]|Set my Alarm to|}
+                            \item an \texttt{input} with \texttt{type\_input} $=$ \Colorbox{light-gray}{\lstinline[columns=fixed]|time|}, \texttt{name} $=$ \Colorbox{light-gray}{\lstinline[columns=fixed]|log-up|}, and \texttt{label} $=$ \Colorbox{light-gray}{\lstinline[columns=fixed]|Stood up at|}
+                            \item an \texttt{input} with \texttt{type\_input} $=$ \Colorbox{light-gray}{\lstinline[columns=fixed]|text|}, \texttt{name} $=$ \Colorbox{light-gray}{\lstinline[columns=fixed]|log-word|}, \texttt{label} $=$ \Colorbox{light-gray}{\lstinline[columns=fixed]|First Word of the Day|}, and \texttt{placeholder} $=$ \Colorbox{light-gray}{\lstinline[columns=fixed]|What did you think when you heard the Alarm|}
+                        \end{itemize}
+                \end{itemize}
+        \end{itemize}
+\end{itemize}
+
+Note that when entering and submitting data in the form in card \Colorbox{light-gray}{\lstinline[columns=fixed]|Diary|} the data persists in the input fields even when refreshing the page.
+By changing the data and resubmitting, the database entry on the server is overwritten with the new content.
+In contrast to this, when entering and submitting data in the form in card \Colorbox{light-gray}{\lstinline[columns=fixed]|Log|} the data disappears and the input fields are set back to its default value.
+In this second case the data is stored incrementally in the database and is not fed back to the input fields.
+
+This difference is configured by checking (store incrementally) or unchecking (update in place) the \texttt{is\_log} field of the style \texttt{formUserInput}.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.95\textwidth]{form_empty.png}
+    \caption{A demo page with user input fields and submit buttons to send the data to the server.}
+    \label{fig.form-empty}
+\end{figure}
+
+In order to fetch user input and display it on the screen the style \texttt{showUserInput} can be used.
+All that needs to be done is creating a section with style \texttt{showUserInput} and set the field \texttt{source} to the \texttt{name} of the form from which the data should be displayed.
+
+As a demonstration let's add a new section page (set \emph{Page Type} to \texttt{Sections}) with keyword \Colorbox{light-gray}{\lstinline[columns=fixed]|show_user_input|} and title \Colorbox{light-gray}{\lstinline[columns=fixed]|Show User Input|} to the demo application.
+Remember to check the \emph{Header Position} checkbox (to place the page in the header) in the \emph{Create New Page} form.
+
+Next, add the following sections hierarchically to the page \Colorbox{light-gray}{\lstinline[columns=fixed]|show_user_input|}:
+\begin{itemize}
+    \item a \texttt{container} with \texttt{css} $=$ \Colorbox{light-gray}{\lstinline[columns=fixed]|my-3|}
+        \begin{itemize}
+            \item a \texttt{card} with \texttt{title} $=$ \Colorbox{light-gray}{\lstinline[columns=fixed]|Show Diary|}
+                \begin{itemize}
+                    \item a \texttt{showUserInput} with \texttt{source} $=$ \Colorbox{light-gray}{\lstinline[columns=fixed]|diary|}
+                \end{itemize}
+            \item a \texttt{card} with \texttt{title} \Colorbox{light-gray}{\lstinline[columns=fixed]|Show Log|} and \texttt{css} $=$ \Colorbox{light-gray}{\lstinline[columns=fixed]|mt-3|}
+                \begin{itemize}
+                    \item a \texttt{showUserInput} with \texttt{source} $=$ \Colorbox{light-gray}{\lstinline[columns=fixed]|log|}, \texttt{label\_date\_time} $=$ \Colorbox{light-gray}{\lstinline[columns=fixed]|Date|}, and with \texttt{is\_log} checked
+                \end{itemize}
+        \end{itemize}
+\end{itemize}
+
+Note that if the field \texttt{is\_log} of the style \texttt{showUserInput} is set the data items are displayed as a table with a timestamp column and the input field names as column titles.
+However if \texttt{is\_log} is not set the timestamp disappears and the input field names are used as row headings.
+
+If instead of the style \texttt{formUserInput} the style \texttt{form} is used, the input data is not automatically stored in the database.
+In this case a custom style or component needs to be created which is handling the user data (see Chapter~\ref{sec.extend}).
+
 
 %==============================================================================
 \chapter{User Management}\label{sec.user}
-In order to view, create, modify, and delete users and groups the \texttt{select}, \texttt{insert}, \texttt{update}i, and \texttt{delete} access rights of \textbf{User Management} is required.
+In order to view, create, modify, and delete users and groups the \texttt{select}, \texttt{insert}, \texttt{update}, and \texttt{delete} access rights of \textbf{User Management} is required.
 By default users in the group \texttt{admin} are granted all access rights while the users in the group \texttt{experimenter} are granted all access rights safe \texttt{delete}.
 
 \section{Users}
@@ -322,10 +548,10 @@ Please refer to the documentation on the \href{https://selfhelp.psy.unibe.ch/dem
     \item[\href{https://selfhelp.psy.unibe.ch/demo/extend/432}{Workflow}] provides a short overview on how to manage the source code and how to report back the changes made.
     \item[\href{https://selfhelp.psy.unibe.ch/demo/extend/416}{The Concept Behind the Code}] provides an overview on the code structure and introduces the vocabulary used within the code.
     \item[\href{https://selfhelp.psy.unibe.ch/demo/extend/417}{Evaluate User Input}] explains in very broad terms how user inputs can be handled.
-    \item[\href{https://selfhelp.psy.unibe.ch/demo/extend/419}{Customize the Theme}] provides several approaches to change the look and feel of the web app without changing to much of the source code.
-    \item[\href{https://selfhelp.psy.unibe.ch/demo/extend/418}{Create a Custom Style}]
-    \item[\href{https://selfhelp.psy.unibe.ch/demo/extend/420}{Create a Custom Component}]
-    \item[\href{https://selfhelp.psy.unibe.ch/demo/extend/421}{Create a Custom Page}]
+    \item[\href{https://selfhelp.psy.unibe.ch/demo/extend/419}{Customize the Theme}] provides several approaches to change the look and feel of the web app without changing too much of the source code.
+    \item[\href{https://selfhelp.psy.unibe.ch/demo/extend/418}{Create a Custom Style}] provides a list of steps to be performed in order to create a custom style.
+    \item[\href{https://selfhelp.psy.unibe.ch/demo/extend/420}{Create a Custom Component}] provides a list of steps to be performed in order to create a custom component.
+    \item[\href{https://selfhelp.psy.unibe.ch/demo/extend/421}{Create a Custom Page}] provides some hints and guidelines to create a custom page.
 \end{description}
 
 \end{document}
