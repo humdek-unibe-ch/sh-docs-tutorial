@@ -241,6 +241,32 @@ Doing all of this and tweaking the available fields of the different styles shou
     \label{fig.demo}
 \end{figure}
 
+\subsection{Symbols with Special Meaning}
+In order to facilitate the usage of certain styles several keywords can be used to render user-specific data, easily link to pages, or refer to stored files.
+The following list provides an overview of all available keywords in the different styles:
+
+\begin{itemize}
+    \item In any field of any style the following keywords can be used:
+        \begin{description}
+            \item[\textbf{\texttt{@user}}] This keyword is replaced with the name the user provided during the validation process.
+            \item[\textbf{\texttt{@project}}] This keyword is replaced with the title of the page \texttt{home}.
+        \end{description}
+    \item In the styles \texttt{form}, \texttt{link} and \texttt{button} links can be generated if a special syntax is used:
+        \begin{description}
+            \item[\textbf{\texttt{\#self}}] refers to the current page.
+            \item[\textbf{\texttt{\#back}}] refers to the page that was visited previously.
+                Note that if the previous page cannot be found \texttt{\#back} is equivalent to \texttt{\#home}.
+            \item[\textbf{\texttt{\%<asset\_name>}}] links to a asset where \Colorbox{light-gray}{\lstinline[columns=fixed]|<asset_name>|} is the exact name of the asset.
+            \item[\textbf{\texttt{\#<page\_name>}}] links to a page where \Colorbox{light-gray}{\lstinline[columns=fixed]|<page_name>|} is the keyword of the page.
+            \item[\textbf{\texttt{\#<page\_name>\#<wrapper\_name>}}] links to an anchor on a page where \Colorbox{light-gray}{\lstinline[columns=fixed]|<page_name>|} is the keyword of the page and \Colorbox{light-gray}{\lstinline[columns=fixed]|<wrapper_name>|} is the name of a section that is used as an anchor.
+                Note that the anchor section must be of one of the following styles for this to work: \texttt{alert}, \texttt{container}, \texttt{card}, \texttt{form}.
+            \item[\textbf{\texttt{\#<nav\_page\_name>/<section\_name>}}] links to a navigation section on a navigation page where \Colorbox{light-gray}{\lstinline[columns=fixed]|<nav_page_name>|} is the keyword of the navigation page and \Colorbox{light-gray}{\lstinline[columns=fixed]|<section_name>|} is the name of the navigation section.
+            \item[\textbf{\texttt{\#<page\_name>/<section\_name>\#<wrapper\_name>}}] links to an anchor on a navigation section on a navigation page where \Colorbox{light-gray}{\lstinline[columns=fixed]|<nav_page_name>|} is the keyword of the navigation page, \Colorbox{light-gray}{\lstinline[columns=fixed]|<section_name>|} is the name of a navigation section, and \Colorbox{light-gray}{\lstinline[columns=fixed]|<wrapper_name>|} is the name of a section that is used as anchor.
+                Note that the anchor section must be of one of the following styles for this to work: \texttt{alert}, \texttt{container}, \texttt{card}, \texttt{form}.
+        \end{description}
+    \item The field \texttt{text\_md} of the style \texttt{navigationContainer} allows the keyword \Colorbox{light-gray}{\lstinline[columns=fixed]|@title|} to refer to the field \texttt{title} of the navigation container.
+\end{itemize}
+
 %------------------------------------------------------------------------------
 \section{Create a Menu of Pages}
 Up to this point we created a section page and added the link to this page to the navigation bar.
