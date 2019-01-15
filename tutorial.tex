@@ -76,7 +76,7 @@
 
 \textbf{SelfHelp WebApp} - Create Web Applications Serving as a Platform for Research Experiments\\
 \vskip 6mm
-Tutorial
+Tutorial for version v0.9.8
 \vskip 6mm
 
 \fontsize{13}{14}\selectfont
@@ -140,9 +140,8 @@ This opens the \emph{Create New Page} form (see Figure~\ref{fig.create_page}) wh
         Enable this field to make the page appear as a menu-point in the navigation bar of the WebApp.
         Drag and drop the item \textbf{New Page} to the location you want it to appear.
         Note that the page will only appear as a menu item once the \texttt{title} field is set (this must be done after the page creation process).
-    \item[User Input]
-        This field specifies whether the page will hold forms for user input.
-        Leave this disabled.
+    \item[Headless Page (advanced only)]
+        This allows to select whether the page will be rendered with (default) or without header and footer.
     \item[Protocol (advanced only)]
         The protocol specifies how a page is accessed.
         Do not change this.
@@ -153,9 +152,10 @@ This opens the \emph{Create New Page} form (see Figure~\ref{fig.create_page}) wh
         Set this flag if you wish to specify advanced options.
         This includes
         \begin{itemize}
-            \item the selection of the \emph{page type} \textbf{Component} or \textbf{Custom}.
+            \item the selection of the \emph{Page Type} \textbf{Component} or \textbf{Custom}.
             \item the selection of the \emph{Protocol}.
-            \item changing the \emph{url pattern}.
+            \item changing the \emph{Url Pattern}.
+            \item changing the \emph{Headless Page} parameter.
         \end{itemize}
 \end{description}
 
@@ -324,7 +324,7 @@ This is indicated on Figure~\ref{fig.nav_page_menu}.
 A navigation page has several characteristics:
 \begin{itemize}
     \item A navigation page can only be rendered if the navigation section to be displayed is specified (this is done via the url).
-    \item Because of the previous point a navigation page cannot be displayed as a menu in the header.
+    \item Because of the previous point a navigation page always points to its first entry when displayed as a menu in the header.
     \item A navigation section can only have the style \texttt{navigationContainer}. However, children of such a section can have any style.
 \end{itemize}
 
@@ -335,8 +335,7 @@ Let this page be a child of the page \Colorbox{light-gray}{\lstinline[columns=fi
 There is no real importance to this but it helps to keep things grouped together in the CMS.
 So, select the page \Colorbox{light-gray}{\lstinline[columns=fixed]|demo-link|} and click the button \textbf{Create New Child Page}.
 Set a keyword (e.g. \Colorbox{light-gray}{\lstinline[columns=fixed]|demo-nav|}) and set the type to \texttt{Navigation}.
-Note by switching to page type \texttt{Navigation} the field \texttt{Header Position} disappears due to the fact that it cannot be used as a header menu.
-Also note that the pattern \Colorbox{light-gray}{\lstinline[columns=fixed]|[i:nav]|} is appended to the \texttt{Url Pattern}.
+Note that the pattern \Colorbox{light-gray}{\lstinline[columns=fixed]|[i:nav]|} is appended to the \texttt{Url Pattern}.
 This pattern will be replaced by the id of the selected navigation section to be displayed on the naviagtion page.
 
 Back in the CMS the page fields can be edited.
@@ -374,13 +373,12 @@ Let's assume that the keyword of the navigation page is \Colorbox{light-gray}{\l
 The url to access this navigation section would then be \Colorbox{light-gray}{\lstinline[columns=fixed]|https://selfhelp.psy.unibe.ch/myapp/demo-nav/n|}.
 
 Obviously, it is rather cumbersome to reach a navigation page this way which is why there is a mechanism to automatically generate these links.
-There exist two possibilities to generate links to a navigation section:
+There exist three possibilities to generate links to a navigation section:
 \begin{enumerate}
+    \item When checking the \emph{Header Position} during the page creation step of a navigation page a link is generated which points to the first navigation section of the navigation page.
     \item When using a link style (e.g. styles \texttt{link} or \texttt{button}), the field \texttt{url} can be set to a pattern of the specific form
         \Colorbox{light-gray}{\lstinline[columns=fixed]|#<nav_page>/<nav_section>|} where \Colorbox{light-gray}{\lstinline[columns=fixed]|<nav\_page>|} is the keyword of the navigation page and \Colorbox{light-gray}{\lstinline[columns=fixed]|<nav\_section>|} the name of the navigation section.
         E.g. assuming that the navigation page keyword is \Colorbox{light-gray}{\lstinline[columns=fixed]|demo-nav|} and the navigation section has the name \Colorbox{light-gray}{\lstinline[columns=fixed]|demo-nav1-navigationContainer|}, to access the navigation section the field \texttt{url} would be set to \Colorbox{light-gray}{\lstinline[columns=fixed]|#demo-nav/demo-nav1-navigationContainer|}.
-
-        \emph{This feature is available from version v1.0.0 (January 2019).}
     \item A list style \texttt{nestedList} allows to be linked to a navigation page which will automatically generate the list of all navigation sections attributed to the navigation page.
         This is accomplished by setting the field \texttt{items} to the pattern \Colorbox{light-gray}{\lstinline[columns=fixed]|{"nav_page": "<nav_page>"}|} where \Colorbox{light-gray}{\lstinline[columns=fixed]|<nav_page>|} is the keyword of the navigation page to be linked.
         E.g. assuming that the navigation page keyword is \Colorbox{light-gray}{\lstinline[columns=fixed]|demo-nav|}, to generate the list of links to all navigation sections the field \texttt{items} would be set to \Colorbox{light-gray}{\lstinline[columns=fixed]|{"nav_page": "demo-nav"}|}.
@@ -435,7 +433,8 @@ The Selfhelp WebApp allows to create html forms where user input is automaticall
 In order for a page to be allowed to send data to the server the following two conditions need to be met:
 \begin{enumerate}
     \item The \texttt{POST} protocol needs to be enabled when creating a new page.
-        This is done by checking the box \emph{User Input} in the \emph{Create New Page} form (see Figure~\ref{fig.create_page}).
+        This is enabled by default.
+        The protocol of a page is set when creating a new page (advanced options).
     \item The page requires input fields, wrapped by a form such that users can enter and submit their data.
         Forms and their input fields are added to a page by adding sections with styles from the groups \texttt{Form} and \texttt{Input}, respectively.
 \end{enumerate}
@@ -448,7 +447,7 @@ There are two ways of how user data is stored to the database automatically:
     \item Data is stored incrementally.
         In this case each time a set of data is submitted to the server, a timestamp is attached to the data.
         For each submission a new entry is created in the database which allows to store multiple entries, made at different points in time.
-        This way of storing the data is intended of log-like forms where a user is asked to enter a specific set of data every day.
+        This way of storing the data is intended for log-like forms where a user is asked to enter a specific set of data every day.
 \end{enumerate}
 
 As a demonstration let's add a new section page (set \emph{Page Type} to \texttt{Sections}) with keyword \Colorbox{light-gray}{\lstinline[columns=fixed]|user_input|} and title \Colorbox{light-gray}{\lstinline[columns=fixed]|User Input|} to the demo application.
@@ -538,6 +537,14 @@ To manage groups navigate to \emph{Groups} in the menu \emph{Admin}.
 All groups are listed in a card on the left.
 Manage the access right of each group by checking or unchecking the appropriate checkbox in the card \emph{Group Access Rights}.
 
+\section{Registration of Users}
+There are two possibilities to register users:
+
+\begin{enumerate}
+    \item Each user is manually created via the menu \emph{Admin/Users} by clicking on the button create new user.
+    \item A user can register himself/herself in the registration form by entering a valid email address and a validation code.
+\end{enumerate}
+
 
 %==============================================================================
 \chapter{Extending the WebApp}\label{sec.extend}
@@ -547,7 +554,7 @@ Please refer to the documentation on the \href{https://selfhelp.psy.unibe.ch/dem
 \begin{description}
     \item[\href{https://selfhelp.psy.unibe.ch/demo/extend/432}{Workflow}] provides a short overview on how to manage the source code and how to report back the changes made.
     \item[\href{https://selfhelp.psy.unibe.ch/demo/extend/416}{The Concept Behind the Code}] provides an overview on the code structure and introduces the vocabulary used within the code.
-    \item[\href{https://selfhelp.psy.unibe.ch/demo/extend/417}{Evaluate User Input}] explains in very broad terms how user inputs can be handled.
+    \item[\href{https://selfhelp.psy.unibe.ch/demo/extend/417}{Evaluate User Input}] explains in very broad terms how user inputs can be handled programmatically.
     \item[\href{https://selfhelp.psy.unibe.ch/demo/extend/419}{Customize the Theme}] provides several approaches to change the look and feel of the web app without changing too much of the source code.
     \item[\href{https://selfhelp.psy.unibe.ch/demo/extend/418}{Create a Custom Style}] provides a list of steps to be performed in order to create a custom style.
     \item[\href{https://selfhelp.psy.unibe.ch/demo/extend/420}{Create a Custom Component}] provides a list of steps to be performed in order to create a custom component.
