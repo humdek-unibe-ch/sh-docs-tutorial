@@ -76,7 +76,7 @@
 
 \textbf{SelfHelp WebApp} - Create Web Applications Serving as a Platform for Research Experiments\\
 \vskip 6mm
-Tutorial for version v0.9.8
+Tutorial for version v0.9.9
 \vskip 6mm
 
 \fontsize{13}{14}\selectfont
@@ -240,32 +240,6 @@ Doing all of this and tweaking the available fields of the different styles shou
     \caption{A demo page of type \textbf{Sections}.}
     \label{fig.demo}
 \end{figure}
-
-\subsection{Symbols with Special Meaning}
-In order to facilitate the usage of certain styles several keywords can be used to render user-specific data, easily link to pages, or refer to stored files.
-The following list provides an overview of all available keywords in the different styles:
-
-\begin{itemize}
-    \item In any field of any style the following keywords can be used:
-        \begin{description}
-            \item[\textbf{\texttt{@user}}] This keyword is replaced with the name the user provided during the validation process.
-            \item[\textbf{\texttt{@project}}] This keyword is replaced with the title of the page \texttt{home}.
-        \end{description}
-    \item In the styles \texttt{form}, \texttt{link} and \texttt{button} links can be generated if a special syntax is used:
-        \begin{description}
-            \item[\textbf{\texttt{\#self}}] refers to the current page.
-            \item[\textbf{\texttt{\#back}}] refers to the page that was visited previously.
-                Note that if the previous page cannot be found \texttt{\#back} is equivalent to \texttt{\#home}.
-            \item[\textbf{\texttt{\%<asset\_name>}}] links to a asset where \Colorbox{light-gray}{\lstinline[columns=fixed]|<asset_name>|} is the exact name of the asset.
-            \item[\textbf{\texttt{\#<page\_name>}}] links to a page where \Colorbox{light-gray}{\lstinline[columns=fixed]|<page_name>|} is the keyword of the page.
-            \item[\textbf{\texttt{\#<page\_name>\#<wrapper\_name>}}] links to an anchor on a page where \Colorbox{light-gray}{\lstinline[columns=fixed]|<page_name>|} is the keyword of the page and \Colorbox{light-gray}{\lstinline[columns=fixed]|<wrapper_name>|} is the name of a section that is used as an anchor.
-                Note that the anchor section must be of one of the following styles for this to work: \texttt{alert}, \texttt{container}, \texttt{card}, \texttt{form}.
-            \item[\textbf{\texttt{\#<nav\_page\_name>/<section\_name>}}] links to a navigation section on a navigation page where \Colorbox{light-gray}{\lstinline[columns=fixed]|<nav_page_name>|} is the keyword of the navigation page and \Colorbox{light-gray}{\lstinline[columns=fixed]|<section_name>|} is the name of the navigation section.
-            \item[\textbf{\texttt{\#<page\_name>/<section\_name>\#<wrapper\_name>}}] links to an anchor on a navigation section on a navigation page where \Colorbox{light-gray}{\lstinline[columns=fixed]|<nav_page_name>|} is the keyword of the navigation page, \Colorbox{light-gray}{\lstinline[columns=fixed]|<section_name>|} is the name of a navigation section, and \Colorbox{light-gray}{\lstinline[columns=fixed]|<wrapper_name>|} is the name of a section that is used as anchor.
-                Note that the anchor section must be of one of the following styles for this to work: \texttt{alert}, \texttt{container}, \texttt{card}, \texttt{form}.
-        \end{description}
-    \item The field \texttt{text\_md} of the style \texttt{navigationContainer} allows the keyword \Colorbox{light-gray}{\lstinline[columns=fixed]|@title|} to refer to the field \texttt{title} of the navigation container.
-\end{itemize}
 
 %------------------------------------------------------------------------------
 \section{Create a Menu of Pages}
@@ -454,7 +428,42 @@ Note that sections that are added to the navigation page \Colorbox{light-gray}{\
 Also note that navigation sections can be arranged hierarchically by using the field \texttt{navigation} in the card \emph{Section Properties} of a navigation section and adding a child navigation section.
 
 %==============================================================================
-\chapter{Working with User Input}\label{sec.user_input}
+\chapter{Symbols with Special Meaning}
+In order to facilitate the usage of certain styles several keywords can be used to render user-specific data, easily link to pages, or refer to stored files.
+The following list provides an overview of all available keywords in the different styles:
+
+\begin{itemize}
+    \item In any field of any style the following keywords can be used:
+        \begin{description}
+            \item[\textbf{\texttt{@user}}] This keyword is replaced with the name the user provided during the validation process.
+            \item[\textbf{\texttt{@project}}] This keyword is replaced with the title of the page \texttt{home}.
+        \end{description}
+    \item In the styles \texttt{form}, \texttt{link} and \texttt{button} links can be generated if a special syntax is used:
+        \begin{description}
+            \item[\textbf{\texttt{\#self}}] refers to the current page.
+            \item[\textbf{\texttt{\#back}}] refers to the page that was visited previously.
+                Note that if the previous page cannot be found \texttt{\#back} is equivalent to \texttt{\#home}.
+            \item[\textbf{\texttt{\%<asset\_name>}}] links to a asset where \Colorbox{light-gray}{\lstinline[columns=fixed]|<asset_name>|} is the exact name of the asset.
+            \item[\textbf{\texttt{\#<page\_name>}}] links to a page where \Colorbox{light-gray}{\lstinline[columns=fixed]|<page_name>|} is the keyword of the page.
+            \item[\textbf{\texttt{\#<page\_name>\#<wrapper\_name>}}] links to an anchor on a page where \Colorbox{light-gray}{\lstinline[columns=fixed]|<page_name>|} is the keyword of the page and \Colorbox{light-gray}{\lstinline[columns=fixed]|<wrapper_name>|} is the name of a section that is used as an anchor.
+                Note that the anchor section must be of one of the following styles for this to work: \texttt{alert}, \texttt{container}, \texttt{card}, \texttt{form}.
+            \item[\textbf{\texttt{\#<nav\_page\_name>/<section\_name>}}] links to a navigation section on a navigation page where \Colorbox{light-gray}{\lstinline[columns=fixed]|<nav_page_name>|} is the keyword of the navigation page and \Colorbox{light-gray}{\lstinline[columns=fixed]|<section_name>|} is the name of the navigation section.
+            \item[\textbf{\texttt{\#<page\_name>/<section\_name>\#<wrapper\_name>}}] links to an anchor on a navigation section on a navigation page where \Colorbox{light-gray}{\lstinline[columns=fixed]|<nav_page_name>|} is the keyword of the navigation page, \Colorbox{light-gray}{\lstinline[columns=fixed]|<section_name>|} is the name of a navigation section, and \Colorbox{light-gray}{\lstinline[columns=fixed]|<wrapper_name>|} is the name of a section that is used as anchor.
+                Note that the anchor section must be of one of the following styles for this to work: \texttt{alert}, \texttt{container}, \texttt{card}, \texttt{form}.
+        \end{description}
+    \item The field \texttt{text\_md} of the style \texttt{navigationContainer} allows the keyword \Colorbox{light-gray}{\lstinline[columns=fixed]|@title|} to refer to the field \texttt{title} of the navigation container.
+    \item The field \texttt{condition} of style \texttt{conditionalContainer} allows the keyword \Colorbox{light-gray}{\lstinline[columns=fixed]|@<form_name>#<field_name>|} to refer to the user data of a specific input field \Colorbox{light-gray}{\lstinline[columns=fixed]|<field_name>|} of a specific form \Colorbox{light-gray}{\lstinline[columns=fixed]|<form_name>|}.
+\end{itemize}
+
+%==============================================================================
+\chapter{User Input}\label{sec.user_input}
+
+The SelfHelp WebApp provides several styles to work with user input.
+The style \texttt{formUserInput} can be used to store data, entered by a user, to the database.
+The style \texttt{showUserInput} is a simple style that allows top display data that was entered by a user via a specific section of style \texttt{formUserInput}.
+Finally, the style \texttt{conditionalContainer} allows to evaluate user input and display content depending on the outcome of the evaluation.
+
+\section{Store User Data to the Database}
 The Selfhelp WebApp allows to create html forms where user input is automatically stored to the database.
 In order for a page to be allowed to send data to the server the following two conditions need to be met:
 \begin{enumerate}
@@ -518,6 +527,8 @@ This difference is configured by checking (store incrementally) or unchecking (u
     \label{fig.form-empty}
 \end{figure}
 
+\section{Fetch User Data from the Database}
+
 In order to fetch user input and display it on the screen the style \texttt{showUserInput} can be used.
 All that needs to be done is creating a section with style \texttt{showUserInput} and set the field \texttt{source} to the \texttt{name} of the form from which the data should be displayed.
 
@@ -545,6 +556,16 @@ However if \texttt{is\_log} is not set the timestamp disappears and the input fi
 If instead of the style \texttt{formUserInput} the style \texttt{form} is used, the input data is not automatically stored in the database.
 In this case a custom style or component needs to be created which is handling the user data (see Chapter~\ref{sec.extend}).
 
+\section{Conditional Content}
+Sometimes it might be interesting to display data depending on an input provided by the user.
+Such a behaviour can be achieved with the help of the style \texttt{conditionalContainer}.
+A section of this style simply wraps its content in a invisible container.
+Further, a condition can be attached to such a section which defines whether the content will be displayed or not.
+This condition is defined in the field \texttt{condition} of the style.
+Defining a condition might be a bit tricky when first encountering it because it is based on a \href{http://www.json.org/}{json} syntax and requires a bit of getting used to.
+It is, however, rather flexible and might be replaced with a more intuitive interface in the future.
+
+For detailed information about the syntax for the condition field refer to the \href{https://selfhelp.psy.unibe.ch/demo/style/362}{\texttt{conditionalContainer} style documentation}.
 
 %==============================================================================
 \chapter{User Management}\label{sec.user}
