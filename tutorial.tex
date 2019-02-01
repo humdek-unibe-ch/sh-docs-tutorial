@@ -76,7 +76,7 @@
 
 \textbf{SelfHelp WebApp} - Create Web Applications Serving as a Platform for Research Experiments\\
 \vskip 6mm
-Tutorial for version v0.9.10
+Tutorial for version v1.0.1
 \vskip 6mm
 
 \fontsize{13}{14}\selectfont
@@ -89,7 +89,7 @@ Simon Maurer - \texttt{simon.maurer@humdek.unibe.ch}\\
 %==============================================================================
 \chapter{Introduction}\label{sec.intro}
 
-This documentation refers to the TPF project \href{http://phhum-g111-nns.unibe.ch:10012/SLP/SLP-sleep_coach}{SLP-selfhelp}.
+This documentation refers to the TPF project \href{http://phhum-a209-cp.unibe.ch:10012/SLP/SLP-sleep_coach}{SLP-selfhelp}.
 The project aims at providing a tool that allows to create a web application that serves as a platform for research experiments.
 The basic concept is as follows:
 
@@ -343,6 +343,7 @@ As with section pages, the field \texttt{title} defines what will be displayed i
 The field \texttt{css\_nav} allows to add css classes to the navigation list that is displayed to the left of a navigation page.
 The fields \texttt{label\_back} and \texttt{label\_next} will be the labels of the navigation buttons \textbf{Next} and \textbf{Back}, respectively.
 These buttons will only be displayed if the field \texttt{has\_navigation\_buttons} is enabled.
+The navigation menu can be enabled/disabled with the field \texttt{has\_navigation\_menu}.
 The field \texttt{is\_fluid} defines whether the content is stretched to the whole of the page or not.
 For more information about the rest of the available fields refer to the \href{https://selfhelp.psy.unibe.ch/demo/style/362}{\texttt{nestedList} style documentation}.
 
@@ -529,7 +530,9 @@ This difference is configured by checking (store incrementally) or unchecking (u
 
 \section{Fetch User Data from the Database}
 
-In order to fetch user input and display it on the screen the style \texttt{showUserInput} can be used.
+The complete set of user data can be downloaded via the menu \emph{Admin/Export} by clicking on the button \textbf{Get User Data}.
+
+However, In order to fetch user input and display it on the screen the style \texttt{showUserInput} can be used.
 All that needs to be done is creating a section with style \texttt{showUserInput} and set the field \texttt{source} to the \texttt{name} of the form from which the data should be displayed.
 
 As a demonstration let's add a new section page (set \emph{Page Type} to \texttt{Sections}) with keyword \Colorbox{light-gray}{\lstinline[columns=fixed]|show_user_input|} and title \Colorbox{light-gray}{\lstinline[columns=fixed]|Show User Input|} to the demo application.
@@ -559,7 +562,7 @@ In this case a custom style or component needs to be created which is handling t
 \section{Conditional Content}
 Sometimes it might be interesting to display data depending on an input provided by the user.
 Such a behaviour can be achieved with the help of the style \texttt{conditionalContainer}.
-A section of this style simply wraps its content in a invisible container.
+A section of this style simply wraps its content in an invisible container.
 Further, a condition can be attached to such a section which defines whether the content will be displayed or not.
 This condition is defined in the field \texttt{condition} of the style.
 Defining a condition might be a bit tricky when first encountering it because it is based on a \href{http://www.json.org/}{json} syntax and requires a bit of getting used to.
@@ -588,8 +591,10 @@ Manage the access right of each group by checking or unchecking the appropriate 
 There are two possibilities to register users:
 
 \begin{enumerate}
-    \item Each user is manually created via the menu \emph{Admin/Users} by clicking on the button create new user.
+    \item Each user is manually created via the menu \emph{Admin/Users} by clicking on the button \textbf{Create New User}.
     \item A user can register himself/herself in the registration form by entering a valid email address and a validation code.
+        Validation codes are generated in the menu \emph{Admin/Users} by clicking on the button \textbf{Generate Validation Codes}.
+        All generated codes can be exported via the menu \emph{Admin/Export} by clicking on the button \textbf{Get Validation Codes}.
 \end{enumerate}
 
 
