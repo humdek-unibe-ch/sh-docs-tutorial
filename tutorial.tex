@@ -76,7 +76,7 @@
 
 \textbf{SelfHelp WebApp} - Create Web Applications Serving as a Platform for Research Experiments\\
 \vskip 6mm
-Tutorial for version v1.0.1
+Tutorial for version v1.1.0
 \vskip 6mm
 
 \fontsize{13}{14}\selectfont
@@ -148,6 +148,8 @@ This opens the \emph{Create New Page} form (see Figure~\ref{fig.create_page}) wh
     \item[Url Pattern (advanced only)]
         This field describes the url path of how the page will be accessible.
         By default the keyword is used.
+    \item[Open Access]
+        If set, the page will be accessible without having to log in to the WebApp.
     \item[Advanced]
         Set this flag if you wish to specify advanced options.
         This includes
@@ -429,7 +431,7 @@ Note that sections that are added to the navigation page \Colorbox{light-gray}{\
 Also note that navigation sections can be arranged hierarchically by using the field \texttt{navigation} in the card \emph{Section Properties} of a navigation section and adding a child navigation section.
 
 %==============================================================================
-\chapter{Symbols with Special Meaning}
+\chapter{Symbols with Special Meaning}\label{sec.symb}
 In order to facilitate the usage of certain styles several keywords can be used to render user-specific data, easily link to pages, or refer to stored files.
 The following list provides an overview of all available keywords in the different styles:
 
@@ -439,7 +441,7 @@ The following list provides an overview of all available keywords in the differe
             \item[\textbf{\texttt{@user}}] This keyword is replaced with the name the user provided during the validation process.
             \item[\textbf{\texttt{@project}}] This keyword is replaced with the title of the page \texttt{home}.
         \end{description}
-    \item In the styles \texttt{form}, \texttt{link} and \texttt{button} links can be generated if a special syntax is used:
+    \item In the styles \texttt{form}, \texttt{link}, \texttt{button}, and \texttt{markdown} links can be generated if a special syntax is used:
         \begin{description}
             \item[\textbf{\texttt{\#self}}] refers to the current page.
             \item[\textbf{\texttt{\#back}}] refers to the page that was visited previously.
@@ -454,6 +456,7 @@ The following list provides an overview of all available keywords in the differe
         \end{description}
     \item The field \texttt{text\_md} of the style \texttt{navigationContainer} allows the keyword \Colorbox{light-gray}{\lstinline[columns=fixed]|@title|} to refer to the field \texttt{title} of the navigation container.
     \item The field \texttt{condition} of style \texttt{conditionalContainer} allows the keyword \Colorbox{light-gray}{\lstinline[columns=fixed]|@<form_name>#<field_name>|} to refer to the user data of a specific input field \Colorbox{light-gray}{\lstinline[columns=fixed]|<field_name>|} of a specific form \Colorbox{light-gray}{\lstinline[columns=fixed]|<form_name>|}.
+    \item The field \texttt{text\_md} of style \texttt{markdown} allows the keyword \Colorbox{light-gray}{\lstinline[columns=fixed]|@<form_name>#<field_name>|} to refer to the user data of a specific input field \Colorbox{light-gray}{\lstinline[columns=fixed]|<field_name>|} of a specific form \Colorbox{light-gray}{\lstinline[columns=fixed]|<form_name>|}.
 \end{itemize}
 
 %==============================================================================
@@ -532,8 +535,11 @@ This difference is configured by checking (store incrementally) or unchecking (u
 
 The complete set of user data can be downloaded via the menu \emph{Admin/Export} by clicking on the button \textbf{Get User Data}.
 
-However, In order to fetch user input and display it on the screen the style \texttt{showUserInput} can be used.
-All that needs to be done is creating a section with style \texttt{showUserInput} and set the field \texttt{source} to the \texttt{name} of the form from which the data should be displayed.
+However, In order to fetch user input and display it on the screen either of the styles \texttt{showUserInput} or \texttt{markdown} can be used.
+As described in Chapter~\ref{sec.symb} the field \texttt{text\_md} of style \texttt{markdown} allows the keyword \Colorbox{light-gray}{\lstinline[columns=fixed]|@<form_name>#<field_name>|} to refer to the user data of a specific input field \Colorbox{light-gray}{\lstinline[columns=fixed]|<field_name>|} of a specific form \Colorbox{light-gray}{\lstinline[columns=fixed]|<form_name>|}.
+This allows to customize the way how user data is rendered given that the style \texttt{markdown} is very versatile in this respect.
+
+When using the style \texttt{showUserInput} all that needs to be done is creating a section with style \texttt{showUserInput} and set the field \texttt{source} to the \texttt{name} of the form from which the data should be displayed.
 
 As a demonstration let's add a new section page (set \emph{Page Type} to \texttt{Sections}) with keyword \Colorbox{light-gray}{\lstinline[columns=fixed]|show_user_input|} and title \Colorbox{light-gray}{\lstinline[columns=fixed]|Show User Input|} to the demo application.
 Remember to check the \emph{Header Position} checkbox (to place the page in the header) in the \emph{Create New Page} form.
